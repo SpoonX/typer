@@ -21,6 +21,10 @@ module.exports = {
       return 'boolean';
     }
 
+    if (value.search(/^\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z?$/) > -1) {
+      return 'datetime';
+    }
+
     return 'string';
   },
 
@@ -49,6 +53,11 @@ module.exports = {
       case 'string':
       case 'text':
         value = this.cast(value, 'boolean') ? value + '' : null
+        break;
+
+      case 'date':
+      case 'datetime':
+        value = new Date(value);
         break;
 
       case 'int':
