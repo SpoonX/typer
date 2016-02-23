@@ -45,6 +45,15 @@ describe('Cast', function () {
       assert.strictEqual(typer.cast('Foo bar bat baz bacon', 'integer'), 0);
     });
 
+    it('should properly cast to a new Date', function () {
+      var testDate = new Date('2016-02-22T18:00:00.000');
+
+      assert.deepEqual(typer.cast('2016-02-22T18:00:00.000', 'date'), testDate);
+      assert.deepEqual(typer.cast('2016-02-22T18:00:00.000Z', 'date'), testDate);
+      assert.deepEqual(typer.cast('2016-02-22T18:00:00.000', 'datetime'), testDate);
+      assert.deepEqual(typer.cast('2016-02-22T18:00:00.000Z', 'datetime'), testDate);
+    });
+
     it('should properly cast to a float', function () {
       assert.strictEqual(typer.cast('23', 'float'), 23.00);
       assert.strictEqual(typer.cast(23, 'float'), 23.00);
@@ -64,6 +73,8 @@ describe('Cast', function () {
       assert.strictEqual(typer.cast('false', 'smart'), false);
       assert.strictEqual(typer.cast('true', 'smart'), true);
       assert.strictEqual(typer.cast('null', 'smart'), null);
+      assert.deepEqual(typer.cast('2016-02-22T18:00:00.000', 'smart'), new Date('2016-02-22T18:00:00.000'));
+      assert.deepEqual(typer.cast('2016-02-22T18:00:00.000Z', 'smart'), new Date('2016-02-22T18:00:00.000Z'));
     });
   });
 
@@ -101,6 +112,11 @@ describe('Cast', function () {
     it('should properly fall back to string', function () {
       assert.strictEqual(typer.detect([]), 'string');
       assert.strictEqual(typer.detect({}), 'string');
+    });
+
+    it('should properly detect the type given (datetime)', function () {
+      assert.strictEqual(typer.detect('2016-02-22T18:00:00.000Z'), 'datetime');
+      assert.strictEqual(typer.detect('2016-02-22T18:00:00.000'), 'datetime');
     });
   });
 });
