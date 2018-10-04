@@ -57,7 +57,7 @@ module.exports = {
 
       case 'date':
       case 'datetime':
-        value = new Date(value);
+        if (value) value = new Date(value);
         break;
 
       case 'int':
