@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = { 
   /**
    * Detect the type of `value`. Returns 'integer', 'float', 'boolean' or 'string'; defaults to 'string'.
    *
@@ -24,7 +24,7 @@ module.exports = {
     if (value.search(/^\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z?$/) > -1) {
       return 'datetime';
     }
-
+ 
     return 'string';
   },
 
